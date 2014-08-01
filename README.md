@@ -76,3 +76,5 @@ Usage of tcpproxy:
 ```
 
 ##最后希望这个工具也能帮到你.
+
+如果你懒的手动编译, 我这里在 centos 64 位下编译了一个版本. 下载地址: http://pan.baidu.com/s/1o6wRCpG
