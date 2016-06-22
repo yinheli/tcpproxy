@@ -9,8 +9,8 @@ import (
 	"time"
 )
 
-const bufSize = 4096
-const nBuf = 2048
+const bufSize = 8192
+const nBuf = 6144
 
 const (
 	NO_TIMEOUT = iota
@@ -28,6 +28,7 @@ var (
 	target   = flag.String("target", "", "target host and port. eg: 192.168.1.100:9001")
 	t        = flag.Int("timeout", 60, "timeout (second), default 60s")
 	debug    = flag.Bool("debug", false, "print debug message")
+	format   = flag.String("format", "hex", "debug output format, `hex` or `string`")
 	sleep    = flag.Int("sleep", 0, "every transfer with sleep second(s)")
 	sleepLoc = flag.String("sleepLoc", SLEEP_LOC_AFTER, "sleep position, before: before send to backend server; after: after receive data from backend; both: all")
 
@@ -38,7 +39,7 @@ var (
 
 func main() {
 
-	fmt.Println("\n  tcpproxy v1.0.1  @author yinheli")
+	fmt.Println("\n  tcpproxy v1.0.2  @author yinheli")
 
 	flag.Parse()
 
@@ -136,9 +137,9 @@ func pipeThenClose(src, dst net.Conn, timeoutOpt int, dt int) {
 				if *debug {
 					timeEscape := time.Now().Sub(start).Nanoseconds() / 1e6
 					if dt == TYPE_OUT {
-						log.Printf("send: %s <-> %s, time:%vms \n%v\n", src.RemoteAddr(), dst.RemoteAddr(), timeEscape, hex.Dump(data))
+						log.Printf("send: %s <-> %s, time:%vms \n%v\n", src.RemoteAddr(), dst.RemoteAddr(), timeEscape, formatContent(data))
 					} else {
-						log.Printf("recive: %s <-> %s, time:%vms \n%v\n", src.RemoteAddr(), dst.RemoteAddr(), timeEscape, hex.Dump(data))
+						log.Printf("recive: %s <-> %s, time:%vms \n%v\n", src.RemoteAddr(), dst.RemoteAddr(), timeEscape, formatContent(data))
 					}
 				}
 			}
@@ -147,4 +148,12 @@ func pipeThenClose(src, dst net.Conn, timeoutOpt int, dt int) {
 			break
 		}
 	}
+}
+
+func formatContent(data []byte) string {
+	if *format == "hex" {
+		return hex.Dump(data)
+	}
+
+	return string(data)
 }

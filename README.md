@@ -20,14 +20,22 @@
 ```bash
 [appuser@pos-dev ~]$ tcpproxy 
 
-  tcpproxy v1.0.1  @author yinheli
+  tcpproxy v1.0.2  @author yinheli
 Usage of tcpproxy:
-  -debug=false: print debug message
-  -port="1234": listen port, default 1234
-  -sleep=0: every transfer with sleep second(s)
-  -sleepLoc="after": sleep position, before: before send to backend server; after: after receive data from backend; both: all
-  -target="": target host and port. eg: 192.168.1.100:9001
-  -timeout=60: timeout (second), default 60s
+  -debug
+    	print debug message
+  -format hex
+    	debug output format, hex or `string` (default "hex")
+  -port string
+    	listen port, default 1234 (default "1234")
+  -sleep int
+    	every transfer with sleep second(s)
+  -sleepLoc string
+    	sleep position, before: before send to backend server; after: after receive data from backend; both: all (default "after")
+  -target string
+    	target host and port. eg: 192.168.1.100:9001
+  -timeout int
+    	timeout (second), default 60s (default 60)
 ```
 
 一个 pos 签到的例子, 如果要测试超时, 可以添加 sleep 参数即可, 然后在收到后端 posp 的响应后 `ctrl + c` 关掉代理, 不给 pos 响应.
