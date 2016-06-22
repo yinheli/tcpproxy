@@ -38,6 +38,8 @@ Usage of tcpproxy:
     	timeout (second), default 60s (default 60)
 ```
 
+> update to `v1.0.2` add format option
+
 一个 pos 签到的例子, 如果要测试超时, 可以添加 sleep 参数即可, 然后在收到后端 posp 的响应后 `ctrl + c` 关掉代理, 不给 pos 响应.
 
 ```
